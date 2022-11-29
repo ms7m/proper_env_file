@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "proper-env-file"
+version = "0.1.0"
+description = ""
+authors = ["Mustafa Mohamed <git@ms7m.me>"]
+readme = "README.md"
+packages = [{include = "proper_env_file"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+loguru = "^0.6.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
