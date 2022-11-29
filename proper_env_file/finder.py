@@ -16,6 +16,9 @@ class Environ(str, Enum):
 
 @functools.lru_cache(maxsize=1)
 def determine_valid_environment_file(
+    environment_variable_for_development: str = "DEVELOPMENT_MODE_ENABLED",
+    environment_variable_for_production: str = "PRODUCTION_MODE_ENABLED",
+    environment_development_file_name: str = ".developer_mode",
     override_environment: str = None,
 ) -> typing.Tuple[Environ, str]:
     """Determines the best environment file to use based on standards.
@@ -28,10 +31,10 @@ def determine_valid_environment_file(
     _set_mode = Environ.PRODUCTION
     
     if (
-        os.getenv("DEVELOPMENT_MODE_ENABLED") is not None
+        os.getenv(environment_variable_for_development) is not None
         or override_environment == "development"
         or override_environment == "dev"
-        or pathlib.Path(".developer_mode").exists()
+        or pathlib.Path(environment_development_file_name).exists()
     ):
         logger.debug("Development mode enabled")
 
@@ -52,7 +55,7 @@ def determine_valid_environment_file(
         )
         _set_mode = Environ.DEVELOPMENT
     elif (
-        os.getenv("INVII_PRODUCTION") is not None
+        os.getenv(environment_variable_for_production) is not None
         or override_environment == "production"
         or override_environment == "prod"
     ):
