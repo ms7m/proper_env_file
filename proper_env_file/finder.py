@@ -6,6 +6,9 @@ import typing
 import functools
 
 
+
+
+
 class Environ(str, Enum):
     PRODUCTION = "production"
     DEVELOPMENT = "development"
@@ -25,10 +28,10 @@ def determine_valid_environment_file(
     _set_mode = Environ.PRODUCTION
     
     if (
-        os.getenv("INVII_DEVELOPMENT") is not None
+        os.getenv("DEVELOPMENT_MODE_ENABLED") is not None
         or override_environment == "development"
         or override_environment == "dev"
-        or pathlib.Path(".invii_dev_mode").exists()
+        or pathlib.Path(".developer_mode").exists()
     ):
         logger.debug("Development mode enabled")
 
